@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native'
 //Navigation
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 //Screens
 import HomeScreen from './screens/Home';
 import WalletScreen from './screens/Wallet';
@@ -9,9 +9,39 @@ import PayScream from './screens/Pay';
 
 const Tab = createBottomTabNavigator();
 
+const icons = {
+    Home: {
+        lib: AntDesign,
+        name: 'home' 
+    },
+    Wallet: {
+        lib: AntDesign,
+        name: 'creditcard'
+    },
+    Pay: {
+        lib: AntDesign,
+        name: 'home'
+    },
+    Notifications: {
+        lib: Ionicons,
+        name: 'ios-notifications-outline'
+    },
+    Settings: {
+        lib: AntDesign,
+        name: 'setting'
+    }
+}
+
 function Navigation(){
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ color, size }) => {
+                    const { lib: Icon, name } = icons[route.name];
+                    return <Icon name={name} size={size} color={color} />
+                },
+            })}
+        >
             <Tab.Screen 
                 name="Home" 
                 component={HomeScreen} 
